@@ -1,14 +1,18 @@
+% !TEX root = ../main.tex
 \section{Synopsis}\label{sec:synopsis}
 
 The Information Bottleneck (IB) theory of deep learning is first introduced
-in \cite{shwartzziv2017}. They introduce a promising model invariant methodology
-to measure the compression and generalization capabilities by respectively
-measuring the mutual information $I(X;T)$ and $I(Y;T)$. This creates
-coordinates in the information plane. Examining the behaviour of DNNs on said
-plane as a function of number of epochs they claim this provides evidence, that
-training is split into two main phases. A short initial fitting phase, reducing
-training error, and one much longer compression phase induced by stochastic
-relaxation or random diffusion. Thus owed to SGD learning transitions into
-what they call the \textit{SGD drift-diffusion phase} whose transition they
-claim is tracable both in the information plane and as well as by the weight 
-gradients mean norm and standard deviation.
+in \cite{tishby2015}, building on the IB principle of \cite{tishby1999}, and
+examined empirically in \cite{shwartzziv2017}. Here we will focus our attention
+to the claims and results presented in \cite{shwartzziv2017}. They introduce a 
+promising model invariant methodology to measure what they in
+\cite{shwartzziv2017} interpret the compression and generalization capabilities
+by respectively measuring the mutual information $I(X;T)$ and $I(Y;T)$. This 
+creates coordinates in the information plane \cite{tishby2015}. Examining the
+behaviour of DNNs on said plane as a function of number of epochs they claim
+this provides evidence, that training is split into two main phases. A short
+initial fitting phase, reducing training error, and one much longer compression
+phase induced by stochastic relaxation or random diffusion. Thus owed to SGD
+learning transitions into what they call the \textit{SGD drift-diffusion phase}
+whose transition they claim is tracable both in the information plane and as
+well as by the weight gradients mean norm and standard deviation.

@@ -1,0 +1,24 @@
+% !TEX root = ../main.tex
+\section{What Instigates Compression in DNNs}\label{sec:compression}
+A rebuttle paper released shortly after \cite{shwartzziv2017} written by Saxe et. al.
+\cite{saxe2018} provide evidence that several claims from the former paper are
+wrong. Here we will focus our attentions to what has a direct causal link to
+the observed compression phenomena as seen in the information plane, and
+measured by the mutual information $I(X; T)$.
+
+In \cite{shwartzziv2017} they claim that the stochasticity introduced by
+SGD induces a random difussion process which can be described by the 
+Focker-Planck equation. An argument about the error constraint maximizing
+the conditional entropy $H(X\mid T_i)$ i.e. minimizes the mutual information
+$(IX;T_i)=H(X)-H(X\mid T_i)$. Thus attributing the compression to the 
+optimization method SGD. In \cite{saxe2018} they show that compression is seen
+as a result of:
+\begin{itemize}
+	\item \textbf{Double-saturating nonlinearities} cause ...
+	\item \textbf{Growth in weight magnitude} make ...
+	\item \textbf{Genuinely task-irrelevant input dimensions} do ...
+\end{itemize}
+subsequently they demonstrate that it is \textit{not} a result of:
+\begin{itemize}
+	\item something ...
+\end{itemize}
