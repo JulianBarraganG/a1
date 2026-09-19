@@ -1,0 +1,73 @@
+% ISBI full-paper submission -- ATDL assignment 1
+% Build:  latexmk -pdf main.tex     (bibtex, NOT biber -- IEEEbib.bst is a BibTeX style)
+% Requires in this directory: spconf.sty, IEEEbib.bst
+% --------------------------------------------------------------------------
+\documentclass{article}
+\usepackage{spconf,amsmath,amssymb,graphicx}
+
+% Times text + Times math, as the IEEE/ISBI guidelines ask for.
+\usepackage{mathptmx}
+
+% Compressed lists are explicitly allowed by the ISBI guidelines.
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=14pt}
+
+\usepackage{booktabs}     % proper rules in tables
+% \usepackage{subcaption}   % (a)/(b) subfigures
+\usepackage{microtype}    % subtle spacing tweaks; buys you ~half a line per column
+\usepackage{mwe}         % supplies "example-image" placeholders -- DELETE once real figures are in
+\graphicspath{{figures/}}
+
+% hyperref last, cleveref after hyperref.
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+% Handy macros -- keep notation consistent instead of retyping it.
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\loss}{\mathcal{L}}
+\newcommand{\model}{\textsc{OurMethod}}  % rename once, updates everywhere
+
+% Title and authors
+% -----------------
+\title{On Accreditting Compression the Property of Generalization}
+
+\name{Julian Barragan Gutierrez}
+\address{Advanced Topics in Deep Learning \\
+         University of Copenhagen}
+
+
+\begin{document}
+
+% Do NOT uncomment \ninept -- the assignment forbids changing the font size.
+%\ninept
+
+\maketitle
+
+\begin{abstract}
+	Despite their great success, we have yet to theoretically explain the
+	generalization capabilities of Deep Neural Networks (DNNs).
+	\cite{shwartzziv2017} attempt give an information theoretical theory of
+	deep learning, examining it through the lens of information theory, and
+	claiming that the (emergent and somewhat inexplicable) generalization
+	capabilities of DNNs are owed to compression occuring as a result of the
+	stochasticity of the Stochastic Gradient Descent (SGD) optimization method.
+
+	In a rebutle paper \cite{saxe2018} the claims and methodology of 
+	aforementioned paper is largely disproven. In this paper we scrutinize
+	the Information Bottleneck Theory of Deep Learning claims, the rebuttle
+	papers validity, and focus our discussion on the accreditation of
+	generalization to compression.
+\end{abstract}
+
+\begin{keywords}
+	Deep Neural Networks, Information Bottleneck, compression, generalization
+\end{keywords}
+
+\input{sections/synopsis}
+\input{sections/discussion}
+
+\bibliographystyle{IEEEbib}
+\bibliography{refs}
+
+\end{document}

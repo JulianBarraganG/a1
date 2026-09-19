@@ -1,0 +1,14 @@
+\section{Synopsis}\label{sec:synopsis}
+
+The Information Bottleneck (IB) theory of deep learning is first introduced
+in \cite{shwartzziv2017}. They introduce a promising model invariant methodology
+to measure the compression and generalization capabilities by respectively
+measuring the mutual information $I(X;T)$ and $I(Y;T)$. This creates
+coordinates in the information plane. Examining the behaviour of DNNs on said
+plane as a function of number of epochs they claim this provides evidence, that
+training is split into two main phases. A short initial fitting phase, reducing
+training error, and one much longer compression phase induced by stochastic
+relaxation or random diffusion. Thus owed to SGD learning transitions into
+what they call the \textit{SGD drift-diffusion phase} whose transition they
+claim is tracable both in the information plane and as well as by the weight 
+gradients mean norm and standard deviation.
