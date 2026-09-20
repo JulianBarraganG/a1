@@ -1,5 +1,6 @@
 % ISBI full-paper submission -- ATDL assignment 1
-% Build:  latexmk -pdf main.tex     (bibtex, NOT biber -- IEEEbib.bst is a BibTeX style)
+% Build:  latexmk -pdf main.tex     (bibtex, NOT biber -- IEEEbib.bst is a
+% BibTeX style)
 % Requires in this directory: spconf.sty, IEEEbib.bst
 % --------------------------------------------------------------------------
 \documentclass{article}
@@ -14,8 +15,10 @@
 
 \usepackage{booktabs}     % proper rules in tables
 % \usepackage{subcaption}   % (a)/(b) subfigures
-\usepackage{microtype}    % subtle spacing tweaks; buys you ~half a line per column
-\usepackage{mwe}         % supplies "example-image" placeholders -- DELETE once real figures are in
+\usepackage{microtype}    % subtle spacing tweaks; buys you ~half a line per
+                          % column
+\usepackage{mwe}         % supplies "example-image" placeholders -- DELETE
+                         % once real figures are in
 \graphicspath{{figures/}}
 
 % hyperref last, cleveref after hyperref.
@@ -30,7 +33,7 @@
 
 % Title and authors
 % -----------------
-\title{On Accreditting Compression the Property of Generalization}
+\title{On Accrediting Compression the Property of Generalization}
 
 \name{Julian Barragan Gutierrez}
 \address{Advanced Topics in Deep Learning \\
@@ -47,21 +50,21 @@
 \begin{abstract}
 	Despite their great success, we have yet to theoretically explain the
 	generalization capabilities of Deep Neural Networks (DNNs).
-	\cite{shwartzziv2017} attempt give an information theoretical theory of
+	\cite{shwartzziv2017} attempt to give an information theoretical theory of
 	deep learning, examining it through the lens of information theory, and
 	claiming that the (emergent and somewhat inexplicable) generalization
-	capabilities of DNNs are owed to compression occuring as a result of the
+	capabilities of DNNs are owed to compression occurring as a result of the
 	stochasticity of the Stochastic Gradient Descent (SGD) optimization method.
 
-	In a rebutle paper \cite{saxe2018} the claims and methodology of 
+	In a rebuttal paper \cite{saxe2018} the claims and methodology of
 	aforementioned paper is largely disproven. In this paper we scrutinize
-	the Information Bottleneck Theory of Deep Learning claims, the rebuttle
+	the Information Bottleneck Theory of Deep Learning claims, the rebuttal
 	papers validity, and focus our discussion on the accreditation of
 	generalization to compression.
 \end{abstract}
 
 \begin{keywords}
-	Deep Neural Networks, Information Bottleneck, compression, nely task-irrelevant input dimensions.Generalization
+	Deep Neural Networks, Information Bottleneck, compression, generalization
 \end{keywords}
 
 \input{sections/synopsis}

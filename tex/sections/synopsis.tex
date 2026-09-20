@@ -1,18 +1,44 @@
 % !TEX root = ../main.tex
 \section{Synopsis}\label{sec:synopsis}
 
-The Information Bottleneck (IB) theory of deep learning is first introduced
+\textit{The Information Bottleneck (IB) theory of deep learning} is first 
+introduced
 in \cite{tishby2015}, building on the IB principle of \cite{tishby1999}, and
 examined empirically in \cite{shwartzziv2017}. Here we will focus our attention
-to the claims and results presented in \cite{shwartzziv2017}. They introduce a 
-promising model invariant methodology to measure what they in
-\cite{shwartzziv2017} interpret the compression and generalization capabilities
-by respectively measuring the mutual information $I(X;T)$ and $I(Y;T)$. This 
-creates coordinates in the information plane \cite{tishby2015}. Examining the
-behaviour of DNNs on said plane as a function of number of epochs they claim
-this provides evidence, that training is split into two main phases. A short
-initial fitting phase, reducing training error, and one much longer compression
+to the claims and results presented in \cite{shwartzziv2017}. They introduce a
+promising model invariant methodology for each hidden layer $T_i$ in a DNN,
+where each hidden layer $T_i$ is treated as one random variable, so that the
+network forms the Markov chain $Y\to X\to T_1\to\dots\to T_k\to\hat{Y}$.
+This measures what they in
+\cite{shwartzziv2017} interpret as the compression and generalization 
+capabilities
+by respectively measuring the mutual information $I(X;T)$ and $I(Y;T)$. This
+creates coordinates in the information plane \cite{tishby2015}.
+The mutual information can't be measured directly, so they solve this by
+binning the activations w.r.t. the $2^{12}=4096$
+different input patterns into 30 equal interval bins. This is inevitable since 
+$T$ is in principle a deterministic function of $X$ making the mutual 
+information $I(X; T)$ infinite.
+
+\textit{To argue the SGD Drift-diffusion phase}
+they examine the behaviour of DNNs on said information plane as a function of
+number of epochs. They claim
+this provides evidence that training is split into two main phases; a short
+initial fitting phase reducing training error, and one much longer compression
 phase induced by stochastic relaxation or random diffusion. Thus owed to SGD
 learning transitions into what they call the \textit{SGD drift-diffusion phase}
-whose transition they claim is tracable both in the information plane and as
+whose transition they claim is traceable both in the information plane, as
 well as by the weight gradients mean norm and standard deviation.
+
+\textit{The loss function of choice} for networks trained in 
+\cite{shwartzziv2017} is
+the \textit{cross-entropy loss function}. This choice is explained simply by
+stating that it is conventional for stochastic optimization. They specifically
+mention that they expect minimization of the Empirical Error Minimization (ERM)
+to be - reasonably so - a result of the cross-entropy loss function. Seemingly
+no more consideration as to a potential influence in compression is mentioned.
+
+The cross-entropy loss or log-loss is defined as
+\begin{equation}
+	CE = -\sum_{i=1}^{N} q_i\log_2(p_i)
+\end{equation}

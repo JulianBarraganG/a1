@@ -1,24 +1,67 @@
 % !TEX root = ../main.tex
 \section{What Instigates Compression in DNNs}\label{sec:compression}
-A rebuttle paper released shortly after \cite{shwartzziv2017} written by Saxe et. al.
-\cite{saxe2018} provide evidence that several claims from the former paper are
-wrong. Here we will focus our attentions to what has a direct causal link to
-the observed compression phenomena as seen in the information plane, and
+A rebuttal paper released shortly after \cite{shwartzziv2017} written by Saxe
+et al. \cite{saxe2018} provide evidence that several claims from the former
+paper are wrong. Here we will focus our attentions to what has a direct causal
+link to the observed compression phenomena as seen in the information plane, and
 measured by the mutual information $I(X; T)$.
 
 In \cite{shwartzziv2017} they claim that the stochasticity introduced by
-SGD induces a random difussion process which can be described by the 
-Focker-Planck equation. An argument about the error constraint maximizing
-the conditional entropy $H(X\mid T_i)$ i.e. minimizes the mutual information
-$(IX;T_i)=H(X)-H(X\mid T_i)$. Thus attributing the compression to the 
-optimization method SGD. In \cite{saxe2018} they show that compression is seen
+SGD induces a random diffusion process which can be described by the
+Fokker-Planck equation. Their argument is that this diffusion, subject to the
+error constraint, maximizes the conditional entropy $H(X\mid T_i)$ i.e.
+minimizes the mutual information $I(X;T_i)=H(X)-H(X\mid T_i)$, since $H(X)$ is
+fixed by the data. Thus attributing the compression to the optimization method
+SGD. In \cite{saxe2018} they show that compression is seen
 as a result of:
 \begin{itemize}
-	\item \textbf{Double-saturating nonlinearities} cause ...
-	\item \textbf{Growth in weight magnitude} make ...
-	\item \textbf{Genuinely task-irrelevant input dimensions} do ...
+	\item \textbf{Double-saturating nonlinearities} cause the hidden activations
+	to saturate as training progresses. The binned activity then collapses into
+	the two extreme bins, and the measured $I(X;T)$ drops. Their tanh network
+	compresses, their ReLU network does not. The same holds when the mutual
+	information is estimated with kernel density and $k$-nearest-neighbour
+	estimators instead of binning.
+	\item \textbf{Growth in weight magnitude} make the units enter this
+	saturated regime in the first place. In their minimal model of a single
+	unit $h=f(w_1X)$ with $X\sim\mathcal{N}(0,1)$, $I(T;X)=H(T)$, since $T$ is
+	deterministic given $X$, and they show $H(T)$
+	first rises and then falls as a function of the weight $w_1$ for tanh,
+	whilst it only rises for ReLU.
+	\item \textbf{Genuinely task-irrelevant input dimensions} do compress, but
+	this happens at the same time as the fitting and not in a separate phase
+	afterwards. The information on the input as a whole can still increase.
 \end{itemize}
-subsequently they demonstrate that it is \textit{not} a result of:
+
+% Your own saturation/binning sketch goes here. Uncomment once figures/ has it.
+% \begin{figure}[t]
+%   \centering
+%   \includegraphics[width=\linewidth]{saturation}
+%   \caption{}
+%   \label{fig:saturation}
+% \end{figure}
+
+
+Subsequently they find that compression is \textit{not} a result of:
 \begin{itemize}
-	\item something ...
+	\item \textbf{The drift-diffusion transition} in the gradient SNR. They
+	find this transition in all cases, also in networks that never compress,
+	so the two phases are not causally related to the compression.
+	\item \textbf{The maximum entropy argument} of \cite{shwartzziv2017}, which
+	they argue does not hold theoretically. The stationary distribution it
+	describes is a distribution over weights across different training runs,
+	whilst $H(X\mid T)$ is about the inputs, and this gives no reason that the
+	weights found in one particular run maximize $H(X\mid T)$. They do not show
+	the claim to be false, but leave the burden of proof with
+	\cite{shwartzziv2017}.
+	\item \textbf{The stochasticity of SGD}, as they train the same networks
+	with full batch gradient descent, which has no randomness in its updates,
+	and still see comparable compression in the tanh networks.
 \end{itemize}
+where their account thus reduces to a single mechanism; the weights grow during
+training, and the double-saturating nonlinearity turns this growth into a drop
+in the measured $I(X;T)$. However the mechanism relies on the weights growing in
+the first place, and what makes them grow is never asked, but simply taken as
+given. The loss function is held fixed in all of the comparisons they make. The
+permutation which would settle this, tanh trained with MSE, is never run, and
+the only setting where they do use MSE is the linear network, in which the
+nonlinearity is changed as well.
