@@ -1,0 +1,26 @@
+% !TEX root = ../main.tex
+\section{How the Claims are Tested}\label{sec:testing}
+Every claim in \cite{shwartzziv2017} is read off the trajectory of one
+architecture in the information plane. In \cite{saxe2018} each claim is
+instead tested by varying one component at a time whilst the rest is held
+fixed.
+
+Both the estimator and the nonlinearity are treated as variables rather than
+as given, as covered in \autoref{subsec:estimating}. The same networks are
+measured by binning, by kernel density and by $k$-nearest-neighbours, so that
+no claim rests on one discretization, and the minimal model puts the
+compression on an analytical footing where $I(X;T)$ follows exactly from the
+weight. The phenomenon is therefore a mechanism and not an observation.
+
+The optimizer is isolated in the same manner. Training with full batch
+gradient descent removes the stochasticity whilst everything else is held
+fixed, which is what makes the claim of \cite{shwartzziv2017} falsifiable to
+begin with.
+
+Finally the data is constructed such that the task-irrelevant dimensions are
+known beforehand. Consequently they can ask what compresses, and not merely
+whether the measured quantity falls.
+
+These are the methodological improvements over \cite{shwartzziv2017}, where a
+single architecture, binning scheme and optimizer are used throughout, and
+every claim consequently follows from the same experiment.

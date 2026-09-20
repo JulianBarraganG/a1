@@ -1,10 +1,101 @@
 % !TEX root = ../main.tex
 \section{Discussion}\label{sec:discussion}
 
-\textit{The loss as the variable nobody turned}
+\subsection{The loss as the variable nobody examined}
+The method for refuting the claims in \cite{shwartzziv2017} builds on
+controlled comparison, changing pieces as covered in
+\autoref{sec:compression} to show how components of the experimental setup had
+been overlooked as potential contributors to the observed compression. The
+choice of loss function is left as a stone unturned however. The only time
+Mean Squared Error (MSE) appears is in the linear network, in which the
+nonlinearity was changed as well. The loss is therefore \textit{not} shown to
+be irrelevant to the compression, it is varied without regard to its effect.
+\autoref{tab:permutations} lists the permutations -- i.e. loss/activation
+functions -- which are run jointly across the two papers.
 
-\textit{Cross-entropy as a drive toward saturation}
+\begin{table}[t]
+\centering
+\caption{The permutations of nonlinearity and loss function trained in
+\cite{saxe2018}, and what is observed in the information plane. Three of the
+six are never run.}
+\label{tab:permutations}
+\begin{tabular}{lll}
+\toprule
+nonlinearity & loss function & observed \\
+\midrule
+tanh   & cross-entropy & compression \\
+tanh   & MSE & never run \\
+ReLU   & cross-entropy & no compression \\
+ReLU   & MSE & never run \\
+linear & cross-entropy & never run \\
+linear & MSE & no compression \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\textit{What this account explains}
+\subsection{The growing weights}
+Put simply, the argument in \cite{saxe2018} is that compression occurs as a
+result of a two step process; first the weights grow and consequently the
+activations get saturated, and since tanh is double-saturating they land close
+to either $-1$ or $1$, which results in a low amount of measured information.
+The latter step is well covered, whereas the first is simply assumed. They
+don't ask why the weights grow to begin with.
 
-\textit{The missing permutation}
+One candidate explanation to the growing weights could be the cross-entropy
+function, which is defined as
+\begin{equation}
+	CE = -\sum_{i=1}^{N} q_i\log_2(p_i)
+\end{equation}
+where $q$ is the target and $p$ the predicted distribution over the $N$
+classes. For a one-hot target this reduces to $-\log_2 p_c$ on the correct
+class $c$, which only reaches zero as $p_c\to1$. The cross-entropy loss
+therefore has no finite minimum once the training data is separated, since a
+probability of $1$ is only reached in the limit of infinitely large weights,
+and thus optimization keeps growing the weights long after the fitting is
+done. MSE has a minimum at finite weights, and the gradient-based optimization
+thus stops once the outputs sit on such a minimum.
+
+In \cite{soudry2018} they study this directly, and show that for losses with
+an exponential tail, such as the cross-entropy, gradient descent grows the
+weights as $\log t$ whilst their direction settles on the max-margin solution.
+Their motivation is stated as explaining the benefit of continuing to optimize
+the cross-entropy after the training error is already zero, which is the same
+stretch of training that \cite{shwartzziv2017} report as the compression
+phase. It should be said that this is proven for linear predictors on
+separable data, and only extended to deep networks in a restricted form, so
+for the networks discussed in this paper, it isn't directly applicable, but it
+motivates the exploration of the role played by the loss function.
+
+\subsection{What this explains}
+This does not replace the explanation given in \cite{saxe2018}, but rather
+adds a cause to the argument. The double-saturating nonlinearity is the
+filter which turns growing weights into a reduction in the measured $I(X;T)$,
+whilst the loss is what makes them grow in the first place. Both are needed
+and neither is sufficient on its own.
+
+The networks trained with full batch gradient descent compress just as much as
+the ones trained with SGD, which they report as a fact against
+\cite{shwartzziv2017}. Under this explanation it is what one would expect,
+since nothing in the mechanism needs randomness, and the result in
+\cite{soudry2018} is for plain deterministic gradient descent. The ReLU
+networks still do not compress, also as expected, as growing weights only
+spread the activations over more bins. The linear network settles nothing
+either way, as it has neither a saturating nonlinearity nor a loss which
+drives the weights.
+
+The growth itself is not assumed. In the appendices of \cite{saxe2018} the
+norm of the weights in each layer is reported to increase during training, for
+the tanh as well as the ReLU networks. All of them are trained with the cross-
+entropy however, so this just tells us that the weights grow and not what
+makes them grow.
+
+\subsection{The missing permutation}
+The same networks trained with MSE, everything else held fixed, would separate
+the two explanations. If the compression weakens or disappears then the loss
+is doing part of the work, and compression is not a function of the
+nonlinearity alone. If it compresses in a similar fashion then the
+nonlinearity argument suffices on its own and the conjecture is dead, which
+would only serve to strengthen the arguments in \cite{saxe2018}. Either
+outcome would settle what the two papers leave open, which is whether the
+nonlinearity alone explains the compression, or whether the loss which grows
+the weights is part of the explanation.

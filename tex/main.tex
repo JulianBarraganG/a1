@@ -33,10 +33,11 @@
 
 % Title and authors
 % -----------------
-\title{On Accrediting Compression the Property of Generalization}
+\title{On What Instigates Compression in Deep Neural Networks}
 
 \name{Julian Barragan Gutierrez}
-\address{Advanced Topics in Deep Learning \\
+\address{rbs813 \\
+	     Advanced Topics in Deep Learning \\
          University of Copenhagen}
 
 
@@ -56,19 +57,22 @@
 	capabilities of DNNs are owed to compression occurring as a result of the
 	stochasticity of the Stochastic Gradient Descent (SGD) optimization method.
 
-	In a rebuttal paper \cite{saxe2018} the claims and methodology of
-	aforementioned paper is largely disproven. In this paper we scrutinize
-	the Information Bottleneck Theory of Deep Learning claims, the rebuttal
-	papers validity, and focus our discussion on the accreditation of
-	generalization to compression.
+	In a rebuttal paper \cite{saxe2018} several of these claims are shown not
+	to hold in the general case. In this paper we scrutinize the claims of the
+	Information Bottleneck Theory of Deep Learning and the rebuttal papers case
+	against them, narrowing down on the observed compression and the factors
+	which the two papers credit it to. We subsequently suggest the choice of
+	loss function as an avenue of investigation which both papers neglect.
 \end{abstract}
 
 \begin{keywords}
-	Deep Neural Networks, Information Bottleneck, compression, generalization
+	Information Bottleneck, mutual information estimation, saturating
+	nonlinearities, cross-entropy loss, deep neural networks
 \end{keywords}
 
 \input{sections/synopsis}
 \input{sections/compression}
+\input{sections/testing}
 \input{sections/discussion}
 
 \bibliographystyle{IEEEbib}
